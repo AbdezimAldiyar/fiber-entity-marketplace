@@ -136,7 +136,7 @@ func UpdateDealFull(dealID int, updatedDeal models.Deal) (models.Deal, error) {
 			updatedDeal.ClosedAt = currentDeal.ClosedAt
 		}
 	} else {
-		// если статус НЕ done — закрытие NULL
+		// если status != done — закрытие NULL
 		updatedDeal.ClosedAt = nil
 	}
 
@@ -224,7 +224,6 @@ func UpdateDeal(dealID int, patchData map[string]interface{}) (models.Deal, erro
 		existingDeal.Status = statusString
 	}
 
-	// closed_at — руками менять запрещаем (оно выставляется логикой статуса)
 	if _, exists := patchData["closed_at"]; exists {
 		return models.Deal{}, errors.New("closed_at cannot be set manually")
 	}
